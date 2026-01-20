@@ -1,0 +1,107 @@
+<div class="bg-[#141C22] text-white px-4 py-12 flex items-center justify-center">
+  <div class="w-full max-w-md space-y-8">
+    <!-- Demo Notice -->
+    <div class="bg-yellow-900/30 border border-yellow-600/50 rounded-lg p-4 text-center">
+      <p class="text-yellow-200 font-semibold">⚠️ Portfolio Demo Only</p>
+      <p class="text-yellow-300/80 text-sm mt-1">This is a non-functional demonstration. Login is disabled.</p>
+    </div>
+
+    <!-- Header -->
+    <div class="text-center">
+      <h2 class="text-2xl font-bold">Welcome back to TaskFlow</h2>
+      <p class="text-sm text-[#B6C2CF]">Log in to access your dashboard</p>
+    </div>
+
+    <div *ngIf="successMessage" class="text-green-400 text-sm text-center mb-4">
+      {{ successMessage }}
+    </div>
+
+    <!-- Email Login -->
+    <form [formGroup]="form" (ngSubmit)="submit()" class="bg-[#20272E] rounded-2xl p-6 space-y-6 shadow-lg">
+      <div>
+        <label for="email" class="block text-sm font-medium text-gray-300">Email</label>
+        <input formControlName="email" id="email" type="email" autocomplete="email username" required
+          class="mt-1 block w-full rounded-lg bg-gray-700 border border-gray-600 p-3 text-white focus:outline-none focus:ring-2 focus:ring-green-500" />
+      </div>
+
+      <div>
+        <label for="password" class="block text-sm font-medium text-gray-300">Password</label>
+        <input formControlName="password" id="password" type="password" autocomplete="current-password" required
+          class="mt-1 block w-full rounded-lg bg-gray-700 border border-gray-600 p-3 text-white focus:outline-none focus:ring-2 focus:ring-green-500" />
+      </div>
+
+      <div>
+        <button type="button" disabled
+          class="w-full bg-gray-600 cursor-not-allowed text-gray-400 font-semibold py-3 rounded-xl opacity-60">
+          Login Disabled (Demo Only)
+        </button>
+      </div>
+
+      <div *ngIf="!unverifiedEmail" class="text-sm text-center">
+        <button type="button" disabled class="text-gray-500 text-sm mt-2 cursor-not-allowed">
+          Forgot password? (Disabled)
+        </button>
+      </div>
+
+      <div *ngIf="error" class="text-red-400 text-center text-sm pt-4">
+        {{ error }}
+      </div>
+
+      <div *ngIf="unverifiedEmail" class="text-center mt-4">
+        <button
+          (click)="resendVerification()"
+          class="text-sm text-green-400 hover:underline hover:text-green-300 cursor-pointer"
+        >
+          ✉ Resend verification email
+        </button>
+        <div *ngIf="resendSuccess" class="text-green-400 text-sm mt-2">
+          A new verification link has been sent to your email.
+        </div>
+        <div *ngIf="resendError" class="text-red-400 text-sm mt-2">
+          Something went wrong. Please try again later.
+        </div>
+      </div>
+
+      <div class="text-sm text-center text-[#B6C2CF] pt-6">
+        No account yet?
+        <a routerLink="/auth/register" class="text-green-400 hover:underline cursor-pointer">Register now</a>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- Password Reset Modal -->
+<div
+  *ngIf="showResetModal"
+  class="fixed inset-0 backdrop-blur-sm bg-black/40 z-50 flex justify-center items-center px-4"
+  (click)="closeResetModal()"
+>
+  <div
+    class="bg-[#1C262E] p-6 rounded-lg w-full max-w-md text-white relative animate-fade-in shadow-2xl border border-[#3DB34A]"
+    (click)="$event.stopPropagation()"
+  >
+    <button (click)="closeResetModal()" class="absolute top-3 right-3 text-gray-400 text-lg hover:cursor-pointer">×</button>
+    <h3 class="text-lg font-bold mb-2 text-center">Reset your password</h3>
+    <p class="text-sm text-gray-300 mb-4 text-center">Enter your email address and we’ll send you a reset link.</p>
+
+    <input
+      [(ngModel)]="resetEmail"
+      placeholder="Your email address"
+      class="w-full p-3 rounded-lg bg-gray-700 border border-gray-600 text-white text-sm mb-3"
+    />
+
+    <button
+      type="button" disabled
+      class="w-full bg-gray-600 cursor-not-allowed text-gray-400 py-2 rounded-lg font-semibold text-sm opacity-60"
+    >
+      Password Reset Disabled (Demo Only)
+    </button>
+
+    <div *ngIf="resetEmailSent" class="text-green-400 text-sm text-center mt-3">
+      If this email exists, a reset link has been sent.
+    </div>
+    <div *ngIf="resetError" class="text-red-400 text-sm text-center mt-3">
+      Failed to send email. Please try again later.
+    </div>
+  </div>
+</div>

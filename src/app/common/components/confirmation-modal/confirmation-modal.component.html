@@ -1,0 +1,31 @@
+<div *ngIf="show"
+     class="fixed inset-0 bg-black/80 flex items-center justify-center z-40 p-4"
+     (click)="onBackdropClick()">
+  <div class="bg-[#1a252e] rounded-xl max-w-md w-full border p-6 animate-fade-in"
+       [ngClass]="'border-' + getTypeColor() + '-500/30'"
+       (click)="$event.stopPropagation()">
+
+    <div class="flex items-start gap-3 mb-4">
+      <span class="text-3xl flex-shrink-0">{{ config.icon }}</span>
+      <div class="flex-1">
+        <h2 class="text-xl font-bold mb-1"
+            [ngClass]="'text-' + getTypeColor() + '-300'">
+          {{ config.title }}
+        </h2>
+        <p class="text-sm text-gray-300">{{ config.message }}</p>
+      </div>
+    </div>
+
+    <div class="flex gap-2 mt-6">
+      <button (click)="onCancel()"
+              class="flex-1 px-4 py-2 bg-gray-700 hover:bg-gray-600 text-white rounded-lg transition-colors cursor-pointer">
+        {{ config.cancelText || 'Cancel' }}
+      </button>
+      <button (click)="onConfirm()"
+              class="flex-1 px-4 py-2 text-white rounded-lg transition-colors cursor-pointer font-medium"
+              [ngClass]="'bg-' + getTypeColor() + '-500 hover:bg-' + getTypeColor() + '-600'">
+        {{ config.confirmText || 'Confirm' }}
+      </button>
+    </div>
+  </div>
+</div>

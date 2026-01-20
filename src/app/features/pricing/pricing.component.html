@@ -1,0 +1,479 @@
+<div *ngIf="subscriptionMessage" class="bg-[#0f1720] border border-[#1d2a32] text-green-300 px-4 py-2 rounded mb-6 text-center text-sm">
+  {{ subscriptionMessage }}
+</div>
+
+<div class="min-h-screen bg-[#141C22] text-white px-4 py-12">
+  <!-- Launch Banner -->
+  <div class="max-w-3xl mx-auto mb-8">
+    <div class="rounded-xl border border-[#1d2a32] bg-[#0f1720]/70 p-4 text-center shadow">
+      <p class="text-sm">
+        🎉 <span class="font-semibold">Launch discount:</span>
+        <span class="text-green-400 font-semibold">10% off</span> on all plans — limited time.
+      </p>
+    </div>
+  </div>
+
+  <!-- Header -->
+  <div class="text-center mb-8">
+    <h1 class="text-3xl font-bold mb-3">Choose Your Plan</h1>
+    <p class="text-[#B6C2CF] max-w-xl mx-auto text-sm">
+      Select a plan and start automating — high performance, security, and full automation included.
+    </p>
+  </div>
+
+  <!-- Trial Banner -->
+  <div class="max-w-6xl mx-auto mb-6">
+    <!-- Skeleton while loading -->
+    <div *ngIf="trialBannerLoading" class="rounded-xl border border-[#1d2a32] bg-[#0e151b] p-3 md:p-4 shadow">
+      <div class="flex items-center gap-3 md:gap-4">
+        <div class="shrink-0 w-8 h-8 rounded-full skeleton"></div>
+        <div class="flex-1 min-w-0">
+          <div class="flex items-center gap-2">
+            <div class="skeleton h-5 w-24 rounded"></div>
+            <div class="skeleton h-4 w-40 rounded"></div>
+          </div>
+          <div class="skeleton h-3 w-2/3 mt-2 rounded"></div>
+        </div>
+        <div class="hidden md:flex flex-col items-end">
+          <div class="skeleton h-5 w-16 rounded"></div>
+          <div class="skeleton h-3 w-20 mt-1 rounded"></div>
+        </div>
+        <div class="ml-auto skeleton h-8 w-24 rounded"></div>
+      </div>
+    </div>
+
+    <!-- Real banner -->
+    <div *ngIf="trialPlanData" class="fade-collapse" [class.hide]="!showTrialBanner">
+      <div class="rounded-xl border border-[#1d2a32] bg-[#0e151b] p-3 md:p-4 shadow">
+        <div class="flex items-center gap-3 md:gap-4">
+          <div class="shrink-0 w-8 h-8 rounded-full bg-green-500/15 border border-green-500/30 flex items-center justify-center text-green-300">
+            ⏱
+          </div>
+
+          <div class="flex-1 min-w-0">
+            <div class="flex items-center gap-2">
+              <span class="text-xs px-2 py-0.5 rounded-full bg-green-500/10 border border-green-500/30 text-green-300">Free Trial</span>
+              <span class="text-sm font-semibold truncate">{{ trialPlanData.label }}</span>
+            </div>
+            <p class="text-xs text-[#8aa0ad] mt-1 truncate">
+              {{ trialPlanData.description || 'Try the automation system for 24 hours — one time only.' }}
+            </p>
+          </div>
+
+          <div class="hidden md:flex flex-col items-end">
+            <div class="text-base font-bold text-[#E6F4EA] leading-none">Free</div>
+            <div class="text-[11px] text-[#8aa0ad] mt-1">24h · one-time</div>
+          </div>
+
+          <button
+            (click)="toggleCart(trialPlanData!)"
+            class="ml-auto text-sm font-semibold px-3 py-2 rounded bg-[#3DB34A] hover:bg-[#34a042] text-black cursor-pointer"
+          >
+            {{ isInCart(trialPlanData!) ? 'Remove' : 'Activate' }}
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-6">
+    <!-- LEFT: Plans -->
+    <div class="md:col-span-2">
+      <div class="text-center md:text-left mb-3">
+        <h2 class="text-xl font-bold">Service Subscriptions</h2>
+        <p class="text-[#8aa0ad] text-sm">
+          High-performance task execution, intelligent scheduling, and enterprise-grade security — ready when you are.
+        </p>
+      </div>
+
+      <!-- Scrollable row -->
+      <div class="relative">
+        <!-- SKELETON SCROLLER -->
+        <div class="flex gap-4 overflow-x-auto snap-x snap-mandatory px-1 pb-2 no-scrollbar" *ngIf="loadingPlans">
+          <div
+            *ngFor="let _ of [1,2,3]"
+            class="snap-start shrink-0 w-[88%] sm:w-[75%] md:w-[calc(33.333%-1rem)] max-w-[360px]
+                   h-[520px] rounded-2xl p-5 md:p-6 bg-[#0e151b] border border-[#1e2a30] overflow-hidden">
+            <div class="skeleton h-5 w-1/2 mb-3"></div>
+            <div class="skeleton h-4 w-2/3 mb-6"></div>
+
+            <div class="skeleton h-8 w-32 mb-2"></div>
+            <div class="skeleton h-3 w-24 mb-6"></div>
+
+            <div class="space-y-3 mb-6">
+              <div class="skeleton h-3 w-5/6"></div>
+              <div class="skeleton h-3 w-4/5"></div>
+              <div class="skeleton h-3 w-3/4"></div>
+              <div class="skeleton h-3 w-2/3"></div>
+              <div class="skeleton h-3 w-1/2"></div>
+            </div>
+
+            <div class="skeleton h-9 w-full mt-auto"></div>
+          </div>
+        </div>
+
+        <!-- REAL SCROLLER -->
+        <div
+          class="fade-wrap"
+          [class.in]="realVisible"
+          [attr.aria-hidden]="!realVisible"
+        >
+          <div
+            #planScroller
+            class="flex gap-4 overflow-x-auto snap-x snap-mandatory px-1 pb-2 no-scrollbar"
+          >
+            <!-- Card -->
+            <div
+              *ngFor="let plan of plans; trackBy: trackPlan"
+              class="plan-card snap-start shrink-0 w-[88%] sm:w-[75%] md:w-[calc(33.333%-1rem)] max-w-[360px]
+                     h-[520px] rounded-2xl p-5 md:p-6 bg-[#0e151b] border border-[#1e2a30]
+                     hover:border-[#3DB34A] hover:shadow-lg transition relative cursor-pointer overflow-hidden"
+              [ngClass]="{ 'border-[#3DB34A] ring-1 ring-[#3DB34A]/30': isInCart(plan) }"
+              (click)="selectPlan(plan)"
+            >
+              <!-- Ribbon -->
+              <div *ngIf="plan.promoLabel" class="absolute -right-10 top-4 rotate-45 bg-[#3DB34A] text-black text-xs font-bold px-16 py-1 shadow">
+                {{ plan.promoLabel }}
+              </div>
+
+              <!-- Added pill -->
+              <div *ngIf="isInCart(plan)" class="absolute top-3 right-3">
+                <span class="inline-flex items-center gap-1 text-[11px] px-2 py-0.5 rounded-full
+                             bg-[#0f1720] border border-[#1d2a32] text-green-400">
+                  <span class="text-green-400">●</span> Added
+                </span>
+              </div>
+
+              <!-- Card content -->
+              <div class="flex flex-col h-full">
+                <!-- Header -->
+                <div class="mb-3">
+                  <h3 class="text-lg font-semibold leading-tight">{{ plan.label }}</h3>
+                  <p class="text-[12px] text-[#8aa0ad] mt-1">
+                    Built for speed, reliability, and 24/7 automation.
+                  </p>
+                </div>
+
+                <!-- Price -->
+                <div class="mb-4">
+                  <div class="flex items-end gap-2">
+                    <ng-container *ngIf="plan.discountedCostInEuro !== undefined; else normalPrice">
+                      <span class="text-3xl font-extrabold text-[#E6F4EA]">
+                        {{ plan.discountedCostInEuro | number:'1.0-2' }} €
+                      </span>
+                      <span class="line-through text-sm text-[#8aa0ad]">
+                        {{ plan.costInEuro | number:'1.0-2' }} €
+                      </span>
+                    </ng-container>
+                    <ng-template #normalPrice>
+                      <span class="text-3xl font-extrabold text-[#E6F4EA]">
+                        {{ plan.costInEuro | number:'1.0-2' }} €
+                      </span>
+                    </ng-template>
+                  </div>
+                  <div *ngIf="plan.discountPercent" class="text-[11px] text-green-400 mt-0.5">
+                    Save {{ plan.discountPercent }}%
+                  </div>
+                </div>
+
+                <!-- Key benefits -->
+                <ul class="text-[12px] text-[#B6C2CF] space-y-2 mb-4">
+                  <li>⚡ High-speed task execution</li>
+                  <li>🤖 Intelligent automation</li>
+                  <li>🧭 Advanced filtering and rules</li>
+                  <li>🕒 24/7 availability</li>
+                  <li>🔒 Enterprise-grade security</li>
+                  <li>🚀 Instant access after payment</li>
+                  <li>💬 Priority support</li>
+                  <li>🏆 Best price-performance ratio</li>
+                </ul>
+
+                <!-- Footer -->
+                <div class="mt-auto">
+                  <p class="text-[12px] text-[#8aa0ad] mb-3 line-clamp-2">{{ plan.description }}</p>
+                  <button
+                    (click)="$event.stopPropagation(); toggleCart(plan)"
+                    class="w-full text-sm font-semibold py-2 rounded bg-[#1d2a32] hover:bg-[#24303c] transition cursor-pointer"
+                  >
+                    {{ plan.isTrial
+                        ? (isInCart(plan) ? 'Remove trial' : 'Activate trial')
+                        : (isInCart(plan) ? 'Remove from cart' : 'Add to cart') }}
+                  </button>
+                  <p class="mt-2 text-[11px] text-gray-500 text-center">
+                    {{ hasTrialInCart() ? 'Trial cannot be combined with other plans.' : 'Only one service plan can be in cart.' }}
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Add-ons -->
+      <div class="mt-12 border-t border-[#1d2a32] pt-10 opacity-90">
+        <div class="flex items-center gap-2 mb-2">
+          <h2 class="text-lg font-bold">Add-ons</h2>
+          <span class="text-[11px] px-2 py-0.5 rounded-full border border-yellow-500/30 bg-yellow-500/10 text-yellow-300">
+            Coming soon
+          </span>
+        </div>
+        <p class="text-sm text-[#B6C2CF] mb-6 max-w-md">
+          <strong>Enhanced Features</strong> and additional capabilities are in development.
+        </p>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div class="relative rounded-2xl p-6 shadow-md bg-[#0e151b] border border-[#1e2a30] overflow-hidden opacity-60 pointer-events-none">
+            <div class="absolute inset-0 bg-black/20"></div>
+            <h3 class="text-lg font-semibold mb-2">Advanced Analytics</h3>
+            <div class="mb-3">
+              <div class="text-2xl font-extrabold text-[#E6F4EA]">—</div>
+              <div class="text-[11px] text-green-400 mt-0.5">Available soon</div>
+            </div>
+            <p class="text-xs text-[#B6C2CF] mb-1">Deep insights and performance metrics for your workflows.</p>
+            <p class="text-[11px] text-gray-400">Duration: —</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- RIGHT: Checkout -->
+    <div class="h-fit sticky top-10 w-full bg-[#10181f] border border-[#1d2a32] rounded-xl p-5 shadow">
+      <h3 class="text-lg font-semibold mb-3">Checkout</h3>
+
+      <!-- Empty cart -->
+      <div *ngIf="cart.length === 0" class="text-sm text-[#B6C2CF]">
+        Add a plan to get started.
+      </div>
+
+      <!-- Cart list -->
+      <div *ngIf="cart.length > 0" class="space-y-3">
+        <div
+          *ngFor="let item of cart; let i = index"
+          class="flex items-start justify-between gap-3 rounded p-3
+                 bg-[#0f1720] border border-[#1d2a32]"
+        >
+          <div class="min-w-0">
+            <div class="font-semibold text-white truncate">
+              {{ item.label }}
+              <span class="text-xs text-gray-400 ml-2">({{ item.feature }})</span>
+            </div>
+
+            <div class="text-xs text-[#B6C2CF]">
+              {{ item.durationInDays }} days ·
+              <ng-container *ngIf="item.isTrial; else priceNormal">
+                <span class="text-[#FFD700] font-semibold">Free</span>
+              </ng-container>
+              <ng-template #priceNormal>
+                <ng-container *ngIf="item.discountedCostInEuro !== undefined; else cartNormal">
+                  <span class="text-[#FFD700] font-semibold">
+                    {{ item.discountedCostInEuro | number:'1.0-2' }} €
+                  </span>
+                  <span class="line-through text-[#8aa0ad] ml-1">
+                    {{ item.costInEuro | number:'1.0-2' }} €
+                  </span>
+                </ng-container>
+                <ng-template #cartNormal>
+                  {{ item.costInEuro | number:'1.0-2' }} €
+                </ng-template>
+              </ng-template>
+            </div>
+          </div>
+
+          <button
+            (click)="removeFromCart(i)"
+            class="text-xs px-2 py-1 rounded bg-[#1d2a32] hover:bg-[#24303c] cursor-pointer"
+            title="Remove"
+          >
+            ✕
+          </button>
+        </div>
+
+        <!-- Totals -->
+        <div class="flex justify-between text-sm pt-2 border-t border-[#1d2a32]">
+          <span>Total</span>
+          <span class="font-semibold text-[#FFD700]">
+            <ng-container *ngIf="hasTrialInCart(); else normalTotal">0.00 €</ng-container>
+            <ng-template #normalTotal>{{ cartTotal | number:'1.0-2' }} €</ng-template>
+          </span>
+        </div>
+
+        <!-- Coupon Code -->
+        <div class="mt-3" [class.opacity-50]="hasTrialInCart()">
+          <label class="block text-sm font-medium mb-1">Discount Code</label>
+          <div class="flex gap-2">
+            <input
+              [(ngModel)]="discountCode"
+              [disabled]="hasTrialInCart()"
+              type="text"
+              placeholder="Enter discount code"
+              class="flex-1 bg-[#0f1720] text-white px-3 py-2 rounded text-sm
+                     border border-[#1d2a32] focus:outline-none focus:ring focus:ring-[#3DB34A]/40 transition"
+            />
+            <button
+              (click)="applyDiscountCode()"
+              [disabled]="hasTrialInCart()"
+              class="bg-[#1d2a32] hover:bg-[#24303c] text-white text-sm font-medium px-4 py-2 rounded transition cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
+            >
+              Apply
+            </button>
+          </div>
+          <p *ngIf="discountMessage" class="text-xs mt-2 text-green-400">
+            {{ discountMessage }}
+          </p>
+        </div>
+
+        <button
+          (click)="handleCheckoutClick()"
+          [disabled]="cart.length === 0"
+          class="w-full mt-4 bg-[#3DB34A] hover:bg-[#34a042] text-black font-semibold py-2 rounded transition cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
+        >
+          {{ hasTrialInCart() ? 'Activate now' : 'Buy now' }}
+        </button>
+
+        <div *ngIf="errorMessage" class="text-red-400 text-xs pt-1">{{ errorMessage }}</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Confirmation Popup -->
+  <div *ngIf="showConfirmation" class="fixed inset-0 backdrop-blur-sm bg-black/40 z-50 flex justify-center items-center px-4">
+    <div class="bg-[#10181f] border border-[#1d2a32] p-6 rounded-lg w-full max-w-md text-white relative animate-fade-in shadow-2xl">
+      <button (click)="showConfirmation = false" class="absolute top-3 right-3 text-gray-400 text-lg hover:cursor-pointer">×</button>
+      <h3 class="text-lg font-bold mb-2">{{ hasTrialInCart() ? 'Activate Trial' : 'Confirm Subscription' }}</h3>
+
+      <ng-container *ngIf="!showSuccess">
+        <!-- Discord Trial Flow -->
+        <div *ngIf="hasTrialInCart()" class="mb-5 p-5 rounded-xl bg-[#0f1720] border border-[#1d2a32]">
+          <h4 class="text-sm font-semibold mb-3">Steps to unlock your free trial:</h4>
+
+          <div class="space-y-3">
+            <div class="flex items-center gap-3">
+              <div class="w-6 h-6 flex items-center justify-center rounded-full"
+                  [class.bg-green-500]="discordLinked"
+                  [class.bg-gray-600]="!discordLinked">
+                <span *ngIf="discordLinked">✓</span>
+                <span *ngIf="!discordLinked">1</span>
+              </div>
+              <span [class.text-green-400]="discordLinked">Connect your Discord account</span>
+              <button *ngIf="!discordLinked"
+                      (click)="connectDiscord()"
+                      class="ml-auto text-xs font-semibold px-3 py-1 rounded bg-[#5865F2] hover:bg-[#4752C4] text-white cursor-pointer">
+                Connect
+              </button>
+            </div>
+
+            <div class="flex items-center gap-3">
+              <div class="w-6 h-6 flex items-center justify-center rounded-full"
+                  [class.bg-green-500]="discordLinked"
+                  [class.bg-gray-600]="!discordLinked">
+                <span *ngIf="discordLinked">✓</span>
+                <span *ngIf="!discordLinked">2</span>
+              </div>
+              <span [class.text-green-400]="discordLinked">Join our community server</span>
+              <a *ngIf="discordLinked && !discordVerified"
+                href="https://discord.gg/taskflow" target="_blank"
+                class="ml-auto text-xs font-semibold px-3 py-1 rounded bg-[#1d2a32] hover:bg-[#24303c] text-white cursor-pointer">
+                Join
+              </a>
+            </div>
+
+            <div class="flex items-center gap-3">
+              <div class="w-6 h-6 flex items-center justify-center rounded-full"
+                  [class.bg-green-500]="discordVerified"
+                  [class.bg-gray-600]="!discordVerified">
+                <span *ngIf="discordVerified">✓</span>
+                <span *ngIf="!discordVerified">3</span>
+              </div>
+              <span [class.text-green-400]="discordVerified">Verify your membership</span>
+              <button *ngIf="discordLinked && !discordVerified"
+                      (click)="verifyDiscordJoin()"
+                      class="ml-auto text-xs font-semibold px-3 py-1 rounded bg-[#3DB34A] hover:bg-[#34a042] text-black cursor-pointer">
+                Verify
+              </button>
+            </div>
+          </div>
+
+          <p class="mt-4 text-xs text-[#8aa0ad]" *ngIf="!discordVerified">
+            🔒 Trial activation will unlock once all steps are completed.
+          </p>
+          <p class="mt-4 text-xs text-green-400" *ngIf="discordVerified">
+            🎉 All steps completed — you can now activate your free trial!
+          </p>
+        </div>
+
+        <!-- Order summary -->
+        <div class="text-sm text-[#B6C2CF] mb-4" *ngIf="cart.length > 0">
+          <p class="mb-2">{{ hasTrialInCart() ? 'You are about to activate:' : 'You are about to purchase the following item(s):' }}</p>
+          <ul class="list-disc pl-5 space-y-1">
+            <li *ngFor="let item of cart">
+              <span class="font-semibold text-white">{{ item.label }}</span>
+              <span class="text-gray-400">
+                — {{ item.feature }}, {{ item.durationInDays }} days,
+                <ng-container *ngIf="item.isTrial; else confPrice">
+                  <span class="text-[#FFD700] font-semibold">Free</span>
+                </ng-container>
+                <ng-template #confPrice>
+                  <ng-container *ngIf="item.discountedCostInEuro !== undefined; else confNormal">
+                    <span class="text-[#FFD700] font-semibold">
+                      {{ item.discountedCostInEuro | number:'1.0-2' }} €
+                    </span>
+                    <span class="line-through text-[#8aa0ad] ml-1">
+                      {{ item.costInEuro | number:'1.0-2' }} €
+                    </span>
+                  </ng-container>
+                  <ng-template #confNormal>
+                    {{ item.costInEuro | number:'1.0-2' }} €
+                  </ng-template>
+                </ng-template>
+              </span>
+            </li>
+          </ul>
+          <p class="mt-3 font-semibold" *ngIf="!hasTrialInCart()">
+            Total: <span class="text-[#FFD700]">{{ cartTotal | number:'1.0-2' }} €</span>
+          </p>
+        </div>
+
+        <div *ngIf="errorMessage" class="mt-3 mb-4 p-4 rounded-lg bg-[#2A1C1C] border border-red-500 text-red-300 text-sm animate-fade-in shadow-md">
+          {{ errorMessage }}
+        </div>
+      </ng-container>
+
+      <div *ngIf="showSuccess" class="mt-6 mb-4 p-4 rounded-md bg-[#1E2B20] border border-green-500 text-green-300 text-sm animate-fade-in">
+        <div class="flex flex-col items-center text-center">
+          <svg class="w-12 h-12 mb-3 text-green-400 animate-bounce" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+          </svg>
+          <p class="font-semibold text-lg">
+            {{ hasTrialInCart() ? 'Trial activated!' : 'Subscription activated successfully!' }}
+          </p>
+          <p class="text-sm text-green-200 mt-1">{{ subscriptionMessage }}</p>
+          <button
+            (click)="goToDashboard()"
+            class="mt-6 px-5 py-2 rounded-full bg-gradient-to-r from-green-400 to-[#3DB34A] hover:from-green-500 hover:to-green-600 text-black font-semibold shadow-lg transition-all duration-300 hover:scale-105 flex items-center gap-2 cursor-pointer"
+          >
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
+            </svg>
+            Go to Dashboard
+          </button>
+        </div>
+      </div>
+
+      <div class="flex justify-end gap-3 items-center" *ngIf="!showSuccess">
+        <button (click)="showConfirmation = false" class="px-4 py-2 rounded bg-[#1d2a32] hover:bg-[#24303c] text-white text-sm hover:cursor-pointer">Cancel</button>
+        <button
+          (click)="confirmPurchase()"
+          [disabled]="cart.length === 0 || (hasTrialInCart() && !discordVerified) || loading"
+          class="px-4 py-2 rounded bg-[#3DB34A] hover:bg-[#34a042] text-black text-sm font-semibold hover:cursor-pointer flex items-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
+          [title]="hasTrialInCart() && !discordVerified ? 'Connect Discord, join & verify to activate' : ''"
+        >
+          <svg *ngIf="loading" class="animate-spin h-4 w-4 text-black" viewBox="0 0 24 24" fill="none">
+            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"></path>
+          </svg>
+          {{ hasTrialInCart() ? (discordVerified ? 'Activate' : 'Activate (locked)') : 'Go to Payment' }}
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

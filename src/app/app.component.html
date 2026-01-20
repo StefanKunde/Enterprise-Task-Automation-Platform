@@ -1,0 +1,16 @@
+<div class="flex flex-col min-h-screen">
+  <header class="md:sticky md:top-0 z-50 bg-gray-800 shadow-md shadow-black/20">
+    <app-navbar></app-navbar>
+  </header>
+
+  <main class="flex-grow bg-[#141C22]">
+    <router-outlet></router-outlet>
+  </main>
+
+  <footer id="page-footer" class="bg-[#141C22] text-white">
+    <app-footer></app-footer>
+  </footer>
+</div>
+
+<app-cookie-consent />
+<app-gundalf-hint />

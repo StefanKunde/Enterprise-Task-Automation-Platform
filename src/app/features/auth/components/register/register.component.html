@@ -1,0 +1,85 @@
+<div class="bg-[#141C22] text-white px-4 py-12 flex items-center justify-center">
+  <div class="w-full max-w-md space-y-8">
+    <!-- Demo Notice -->
+    <div class="bg-yellow-900/30 border border-yellow-600/50 rounded-lg p-4 text-center">
+      <p class="text-yellow-200 font-semibold">⚠️ Portfolio Demo Only</p>
+      <p class="text-yellow-300/80 text-sm mt-1">This is a non-functional demonstration. Registration is disabled.</p>
+    </div>
+
+    <!-- Headline -->
+    <div class="text-center">
+      <h2 class="text-2xl font-bold">Create your TaskFlow Account</h2>
+      <p class="text-sm text-[#B6C2CF]">Sign up to get started</p>
+    </div>
+
+    <!-- E-Mail Registrierung -->
+    <form [formGroup]="form" (ngSubmit)="submit()" class="bg-[#20272E] rounded-2xl p-6 space-y-6 shadow-lg mt-4">
+      <!-- Email -->
+      <div>
+        <label for="email" class="block text-sm font-medium text-gray-300">Email</label>
+        <input formControlName="email" id="email" type="email" autocomplete="email" required
+          class="mt-1 block w-full rounded-lg bg-white border border-gray-300 p-3 text-black focus:outline-none focus:ring-2 focus:ring-green-500" />
+        <div *ngIf="form.get('email')?.touched && form.get('email')?.errors" class="text-red-400 text-sm mt-1">
+          <div *ngIf="form.get('email')?.errors?.['required']">Email is required.</div>
+          <div *ngIf="form.get('email')?.errors?.['email']">Invalid email address.</div>
+        </div>
+      </div>
+
+      <!-- Username -->
+      <div>
+        <label for="username" class="block text-sm font-medium text-gray-300">Username</label>
+        <input formControlName="username" id="username" type="text" required
+          class="mt-1 block w-full rounded-lg bg-white border border-gray-300 p-3 text-black focus:outline-none focus:ring-2 focus:ring-green-500" />
+        <div *ngIf="form.get('username')?.touched && form.get('username')?.errors" class="text-red-400 text-sm mt-1">
+          <div *ngIf="form.get('username')?.errors?.['required']">Username is required.</div>
+        </div>
+      </div>
+
+      <!-- Password -->
+      <div>
+        <label for="password" class="block text-sm font-medium text-gray-300">Password</label>
+        <input formControlName="password" id="password" type="password" autocomplete="new-password" required
+          class="mt-1 block w-full rounded-lg bg-white border border-gray-300 p-3 text-black focus:outline-none focus:ring-2 focus:ring-green-500" />
+        <div *ngIf="form.get('password')?.touched && form.get('password')?.errors" class="text-red-400 text-sm mt-1">
+          <div *ngIf="form.get('password')?.errors?.['required']">Password is required.</div>
+          <div *ngIf="form.get('password')?.errors?.['minlength']">Minimum 6 characters required.</div>
+          <div *ngIf="form.get('password')?.errors?.['pattern']">Must contain at least one letter and one number.</div>
+        </div>
+      </div>
+
+      <!-- Confirm Password -->
+      <div>
+        <label for="confirmPassword" class="block text-sm font-medium text-gray-300">Confirm Password</label>
+        <input formControlName="confirmPassword" id="confirmPassword" type="password" autocomplete="new-password" required
+          class="mt-1 block w-full rounded-lg bg-white border border-gray-300 p-3 text-black focus:outline-none focus:ring-2 focus:ring-green-500" />
+        <div *ngIf="form.errors?.['mismatch'] && form.get('confirmPassword')?.touched" class="text-red-400 text-sm mt-1">
+          Passwords do not match.
+        </div>
+      </div>
+
+      <!-- Submit Button -->
+      <div>
+        <button type="button" disabled
+          class="w-full bg-gray-600 cursor-not-allowed text-gray-400 font-semibold py-3 rounded-xl opacity-60">
+          Registration Disabled (Demo Only)
+        </button>
+      </div>
+
+      <!-- General Error -->
+      <div *ngIf="error" class="text-red-400 text-center text-sm pt-2">
+        {{ error }}
+      </div>
+    </form>
+
+    <!-- Email Verification Hinweis -->
+    <div *ngIf="emailVerificationNotice" class="mt-6 text-sm text-green-400 bg-green-900/40 p-4 rounded-xl text-center shadow">
+      ✅ You've successfully registered. Please check your inbox to verify your email address.
+    </div>
+
+    <!-- Link zum Login -->
+    <div class="text-sm text-center text-[#B6C2CF] pt-6">
+      Already have an account?
+      <a routerLink="/auth/login" class="text-green-400 hover:underline cursor-pointer">Login here</a>
+    </div>
+  </div>
+</div>

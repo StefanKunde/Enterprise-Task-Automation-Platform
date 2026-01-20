@@ -1,0 +1,126 @@
+<!-- Match pricing/other pages: centered H1 + consistent left/right padding -->
+<div class="min-h-screen bg-[#141C22] text-white px-4 py-12">
+  <div class="text-center mb-10">
+    <h1 class="text-3xl font-bold">Profile</h1>
+  </div>
+
+  <div class="max-w-3xl mx-auto space-y-8">
+
+    <!-- Email (read-only) -->
+    <div *ngIf="email" class="bg-[#10181f] border border-[#1d2a32] rounded-xl p-4 sm:p-5 space-y-3">
+      <h3 class="text-lg font-semibold">Email Address</h3>
+      <input
+        [value]="email"
+        disabled
+        class="w-full bg-[#0f1720] border border-[#1d2a32] p-3 rounded-lg text-white text-opacity-80 cursor-not-allowed"
+      />
+    </div>
+
+    <!-- Change Password -->
+    <div *ngIf="hasPassword" class="bg-[#10181f] border border-[#1d2a32] rounded-xl p-4 sm:p-5 space-y-3">
+      <div class="flex justify-between items-center">
+        <h3 class="text-lg font-semibold">Change Password</h3>
+        <button
+          (click)="showChangePassword = !showChangePassword"
+          class="text-sm px-3 py-1 bg-[#0f1720] border border-[#1d2a32] text-white rounded hover:bg-[#13202a] transition cursor-pointer"
+        >
+          {{ showChangePassword ? 'Cancel' : 'Edit' }}
+        </button>
+      </div>
+
+      <form *ngIf="showChangePassword" #changePwForm="ngForm" (ngSubmit)="submitPasswordChange(changePwForm)" class="space-y-3 mt-2">
+        <input type="text" name="username" autocomplete="username" class="hidden" />
+
+        <input
+          [(ngModel)]="currentPassword"
+          #currentPw="ngModel"
+          name="currentPassword"
+          required
+          type="password"
+          placeholder="Current password"
+          autocomplete="current-password"
+          class="w-full bg-[#0f1720] border border-[#1d2a32] p-2 rounded text-white text-sm"
+        />
+        <div *ngIf="currentPw.invalid && currentPw.touched" class="text-red-400 text-xs mt-1">
+          Current password is required.
+        </div>
+
+        <input
+          [(ngModel)]="newPassword"
+          name="newPassword"
+          required
+          minlength="6"
+          [pattern]="passwordRegex ? passwordRegex.source : ''"
+          type="password"
+          placeholder="New password"
+          autocomplete="new-password"
+          class="w-full bg-[#0f1720] border p-2 rounded text-white text-sm border-[#1d2a32]"
+          [ngClass]="{
+            'border-green-500': newPasswordValid(),
+            'border-red-500': !newPasswordValid() && (newPassword?.length ?? 0) > 0
+          }"
+        />
+        <div *ngIf="(newPassword?.length ?? 0) > 0 && (newPassword?.length ?? 0) < 6" class="text-red-400 text-xs mt-1">
+          Password must be at least 6 characters.
+        </div>
+        <div *ngIf="(newPassword?.length ?? 0) >= 6 && !newPasswordValid()" class="text-red-400 text-xs mt-1">
+          Must contain at least one letter and one number.
+        </div>
+
+        <input
+          [(ngModel)]="confirmNewPassword"
+          name="confirmNewPassword"
+          required
+          type="password"
+          placeholder="Confirm new password"
+          autocomplete="new-password"
+          class="w-full bg-[#0f1720] border p-2 rounded text-white text-sm border-[#1d2a32]"
+          [ngClass]="{
+            'border-green-500': confirmNewPassword === newPassword && (confirmNewPassword?.length ?? 0) > 0,
+            'border-red-500': confirmNewPassword !== newPassword && (confirmNewPassword?.length ?? 0) > 0
+          }"
+        />
+        <div *ngIf="(confirmNewPassword?.length ?? 0) > 0 && confirmNewPassword !== newPassword" class="text-red-400 text-xs mt-1">
+          Passwords do not match.
+        </div>
+
+        <div *ngIf="passwordValidationError" class="text-red-400 text-xs">
+          {{ passwordValidationError }}
+        </div>
+
+        <button
+          type="submit"
+          class="px-4 py-2 text-sm bg-[#3DB34A] hover:bg-[#34a042] text-black font-semibold rounded transition cursor-pointer"
+        >
+          Save
+        </button>
+
+        <div *ngIf="passwordChangeSuccess" class="text-green-400 text-xs pt-1">
+          Password successfully changed.
+        </div>
+        <div *ngIf="passwordChangeError" class="text-red-400 text-xs pt-1">
+          {{ passwordChangeError }}
+        </div>
+      </form>
+    </div>
+
+    <!-- Active Subscriptions Summary -->
+    <div class="bg-[#10181f] border border-[#1d2a32] rounded-xl p-4 sm:p-5 space-y-2">
+      <h3 class="text-lg font-semibold">Active Subscription</h3>
+      <p *ngIf="subscriptionPrimary" class="text-sm text-[#B6C2CF]">
+        Premium subscription: <strong>active</strong>
+      </p>
+      <p *ngIf="subscriptionAdvanced" class="text-sm text-[#B6C2CF]">
+        Advanced subscription: <strong>active</strong>
+      </p>
+      <p *ngIf="!subscriptionPrimary && !subscriptionAdvanced" class="text-sm text-gray-400">
+        No active subscription
+      </p>
+      <a routerLink="/subscription"
+         class="mt-3 inline-flex bg-[#1d2a32] hover:bg-[#24303c] text-white px-4 py-2 rounded-lg text-sm font-semibold transition cursor-pointer">
+        Manage Subscription
+      </a>
+    </div>
+
+  </div>
+</div>

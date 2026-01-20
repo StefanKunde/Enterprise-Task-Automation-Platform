@@ -1,0 +1,50 @@
+<div
+  *ngIf="show"
+  class="fixed inset-0 backdrop-blur-sm bg-black/40 z-50 flex justify-center items-center px-4"
+  (click)="close()"
+>
+  <div
+    class="bg-[#1C262E] p-6 rounded-lg w-full max-w-md text-white relative animate-fade-in shadow-2xl border border-[#3DB34A]"
+    (click)="$event.stopPropagation()"
+  >
+    <button (click)="close()" class="absolute top-3 right-3 text-gray-400 text-lg hover:cursor-pointer">×</button>
+
+    <h3 class="text-lg font-bold mb-2">Merge with Email Account</h3>
+    <p class="text-sm text-gray-300 mb-4">
+      Enter your email and password to merge with an existing account.
+    </p>
+
+    <input
+      [(ngModel)]="email"
+      type="email"
+      placeholder="Email"
+      class="w-full bg-[#1C262E] text-white px-3 py-2 rounded text-sm border border-gray-600 focus:outline-none focus:ring focus:ring-[#3DB34A] transition mb-2"
+    />
+    <input
+      [(ngModel)]="password"
+      type="password"
+      placeholder="Password"
+      class="w-full bg-[#1C262E] text-white px-3 py-2 rounded text-sm border border-gray-600 focus:outline-none focus:ring focus:ring-[#3DB34A] transition"
+    />
+
+    <div *ngIf="errorMessage" class="mt-4 p-3 rounded bg-[#2A1C1C] border border-red-500 text-red-300 text-sm">
+      {{ errorMessage }}
+    </div>
+
+    <div *ngIf="successMessage" class="mt-4 p-3 rounded bg-[#1E2B20] border border-green-500 text-green-300 text-sm">
+      {{ successMessage }}
+    </div>
+
+    <button
+      (click)="submitMerge()"
+      class="w-full mt-6 bg-[#3DB34A] hover:bg-[#34a042] text-black font-semibold py-2 rounded transition flex justify-center items-center gap-2 cursor-pointer"
+      [disabled]="loading"
+    >
+      <svg *ngIf="loading" class="animate-spin h-4 w-4 text-black" viewBox="0 0 24 24" fill="none">
+        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+        <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"></path>
+      </svg>
+      Merge Accounts
+    </button>
+  </div>
+</div>

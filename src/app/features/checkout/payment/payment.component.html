@@ -1,0 +1,111 @@
+<!-- src/app/checkout/payment/payment.component.html -->
+<div class="min-h-screen bg-[#141C22] text-white px-4 py-12">
+  <div class="max-w-xl mx-auto bg-[#10181f] border border-[#1d2a32] rounded-xl p-6 shadow">
+    <h1 class="text-2xl font-bold mb-2">Complete your payment</h1>
+    <p class="text-sm text-[#B6C2CF] mb-6">Send the exact amount to the address below.</p>
+
+    <ng-container *ngIf="data; else loading">
+      <div class="grid gap-3 text-sm">
+        <div class="flex justify-between">
+          <span class="text-[#B6C2CF]">Currency</span>
+          <span class="font-semibold uppercase">{{ data?.payCurrency }}</span>
+        </div>
+        <div class="flex justify-between">
+          <span class="text-[#B6C2CF]">Amount</span>
+          <span class="font-semibold">{{ data?.payAmount }}</span>
+        </div>
+        <div class="flex justify-between" *ngIf="data?.priceAmount">
+          <span class="text-[#B6C2CF]">Fiat total</span>
+          <span class="font-semibold">{{ data?.priceAmount }} €</span>
+        </div>
+      </div>
+
+      <!-- Add the toggle and small helper text near the QR -->
+      <!-- QR + Controls -->
+      <div class="mt-5 flex items-center gap-4">
+        <div class="p-3 bg-[#0f1720] border border-[#1d2a32] rounded min-w-[216px] min-h-[216px] flex items-center justify-center">
+          <qrcode
+            *ngIf="data?.payAddress"
+            [qrdata]="encodeUri()"
+            [width]="192"
+            [errorCorrectionLevel]="'M'"
+            [cssClass]="'block'"
+            [margin]="1"
+            [elementType]="'canvas'">
+          </qrcode>
+          <span *ngIf="!data?.payAddress" class="text-xs text-[#B6C2CF]">Waiting for address…</span>
+        </div>
+
+        <div class="text-xs text-[#B6C2CF]">
+          Scan this code with your wallet.<br>
+          Supported: BTC, ETH, USDT (ERC-20/TRC-20), LTC, SOL.
+
+          <!-- Toggle: Simple vs Deeplink -->
+          <div class="mt-2 flex items-center gap-2">
+            <label class="flex items-center gap-2 cursor-pointer">
+              <input type="checkbox" [(ngModel)]="useSimpleQR" class="accent-[#3DB34A]" />
+              <span>Simple address QR (recommended for exchange scanners)</span>
+            </label>
+          </div>
+
+          <!-- Helper tip (always shown) -->
+          <div class="mt-1 text-[11px] text-[#8fa2b3] leading-snug">
+            If your wallet says the QR is invalid: keep “Simple address QR” enabled and
+            enter the <span class="font-semibold text-white">Amount</span> manually in your wallet.
+            The address is chain-correct for the selected currency.
+          </div>
+
+          <!-- Network hint -->
+          <div class="mt-2 text-[11px] text-[#8fa2b3]">
+            {{ networkHint(data?.payCurrency) }}
+          </div>
+
+          <!-- Countdown -->
+          <div class="mt-3">
+            Time left to start payment:
+            <span class="font-mono">
+              {{ minutesLeft | number:'2.0-0' }}:{{ secondsLeft | number:'2.0-0' }}
+            </span>
+          </div>
+
+          <!-- Mode note -->
+          <div class="mt-2" *ngIf="!useSimpleQR">
+            <span class="text-[11px] text-[#8fa2b3]">
+              Using wallet deeplink format (amount prefilled when supported).
+            </span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Address box -->
+      <div class="mt-5">
+        <div class="text-xs text-[#B6C2CF] mb-1">Payment address</div>
+        <div class="bg-[#0f1720] border border-[#1d2a32] rounded p-3 break-all">
+          {{ normalizeAddress(data?.payAddress, data?.payCurrency) || 'Address will be available shortly' }}
+        </div>
+        <div class="flex flex-wrap gap-2 mt-2">
+          <button
+            (click)="copy(normalizeAddress(data?.payAddress, data?.payCurrency))"
+            class="text-xs px-3 py-2 rounded bg-[#1d2a32] hover:bg-[#24303c] cursor-pointer">
+            Copy address
+          </button>
+          <button
+            *ngIf="data?.payAmount !== undefined && data?.payAmount !== null"
+            (click)="copy(toStr(data?.payAmount))"
+            class="text-xs px-3 py-2 rounded bg-[#1d2a32] hover:bg-[#24303c] cursor-pointer">
+            Copy amount
+          </button>
+        </div>
+      </div>
+
+      <!-- Status hint -->
+      <div class="mt-6 p-3 rounded bg-[#0f1720] border border-[#1d2a32] text-xs text-[#B6C2CF]">
+        We’ll confirm your order after network confirmations. This page refreshes status automatically.
+      </div>
+    </ng-container>
+
+    <ng-template #loading>
+      <div class="text-sm text-[#B6C2CF]">Loading payment details…</div>
+    </ng-template>
+  </div>
+</div>

@@ -1,0 +1,214 @@
+<!-- Page shell: match pricing page spacing + centered H1 -->
+<div class="min-h-screen bg-[#141C22] text-white px-4 py-12">
+  <div class="text-center mb-10">
+    <h1 class="text-3xl font-bold">Subscription</h1>
+  </div>
+
+  <!-- Wrapper card (dashboard style) -->
+  <div class="max-w-6xl mx-auto">
+    <div class="bg-[#10181f] border border-[#1d2a32] rounded-xl p-4 sm:p-5">
+
+      <!-- Header badges (optional summary; can be removed if not needed) -->
+      <div class="flex flex-col sm:flex-row gap-3 sm:items-center">
+        <h2 class="text-base sm:text-lg font-semibold text-white">Your Subscriptions</h2>
+
+        <div class="sm:ml-auto flex flex-wrap items-center gap-2 sm:gap-3">
+          <span class="inline-flex items-center rounded-full border border-[#1d2a32] bg-[#0a1117] px-3 py-1 text-xs sm:text-sm text-white">
+            Active:
+            <strong class="ml-1">
+              {{ (primaryUi?.active ? 1 : 0) + (advancedUi?.active ? 1 : 0) }}
+            </strong>
+          </span>
+
+          <span
+            *ngIf="nextExpiryDays !== null"
+            class="inline-flex items-center rounded-full border border-[#1d2a32] bg-[#0a1117] px-3 py-1 text-xs sm:text-sm"
+            [ngClass]="{
+              'text-green-400': nextExpiryDays > 14,
+              'text-yellow-400': nextExpiryDays > 7 && nextExpiryDays <= 14,
+              'text-red-400': nextExpiryDays <= 7
+            }"
+          >
+            Next expiry:
+            <strong class="ml-1">{{ nextExpiryDays }} days</strong>
+          </span>
+        </div>
+      </div>
+
+      <!-- Loading / Error -->
+      <div *ngIf="loading" class="mt-6 text-sm text-gray-300">Loading…</div>
+      <div *ngIf="!loading && error" class="mt-6 text-sm text-red-500">{{ error }}</div>
+
+      <!-- Cards grid -->
+      <div *ngIf="!loading && !error" class="mt-6 grid grid-cols-1 sm:grid-cols-2 gap-4">
+
+        <!-- Premium Plan -->
+        <div class="relative rounded-xl bg-[#10181f] border border-[#1d2a32] shadow-md p-4 sm:p-5" [class.opacity-80]="!primaryUi">
+          <div class="flex items-start justify-between gap-3">
+            <div class="min-w-0">
+              <h3 class="text-sm sm:text-base font-semibold">Premium Plan</h3>
+              <p *ngIf="primaryUi?.plan" class="mt-0.5 text-xs text-gray-400 truncate">Plan: {{ primaryUi?.plan }}</p>
+            </div>
+            <span *ngIf="primaryUi"
+                  class="text-xs sm:text-sm font-medium"
+                  [ngClass]="{
+                    'text-green-400': (primaryUi?.remainingDays ?? 0) > 14,
+                    'text-yellow-400': (primaryUi?.remainingDays ?? 0) <= 14 && (primaryUi?.remainingDays ?? 0) > 7,
+                    'text-red-400': (primaryUi?.remainingDays ?? 0) <= 7
+                  }">
+              ●
+              <ng-container *ngIf="primaryUi?.isTrial && primaryUi?.remainingSeconds !== null; else primaryDaysLeft">
+                {{ formatHms(primaryUi?.remainingSeconds || 0) }} left
+              </ng-container>
+              <ng-template #primaryDaysLeft>
+                {{ primaryUi?.remainingDays ?? '—' }} days left
+              </ng-template>
+            </span>
+          </div>
+
+          <ng-container *ngIf="primaryUi; else noPrimary">
+            <div class="mt-4 space-y-2 text-xs sm:text-sm">
+              <div class="flex justify-between gap-3">
+                <span class="text-gray-300">Status</span>
+                <span [ngClass]="{ 'text-green-400': primaryUi?.active, 'text-red-500': !primaryUi?.active }">
+                  {{ primaryUi?.active ? 'Active' : 'Expired' }}
+                </span>
+              </div>
+              <div class="flex justify-between gap-3">
+                <span class="text-gray-300">Expires</span>
+                <span class="text-white">{{ primaryUi?.expiresAt ? (primaryUi?.expiresAt | date:'yyyy-MM-dd') : '—' }}</span>
+              </div>
+              <div class="flex justify-between gap-3">
+                <span class="text-gray-300">Purchased</span>
+                <span class="text-white">{{ primaryUi?.createdAt ? (primaryUi?.createdAt | date:'yyyy-MM-dd') : '—' }}</span>
+              </div>
+              <div *ngIf="isFuture(primaryUi?.startedAt)" class="text-yellow-400">
+                Starts on: {{ primaryUi?.startedAt | date:'yyyy-MM-dd' }}
+              </div>
+            </div>
+
+            <div class="mt-4 flex flex-wrap gap-2">
+              <!-- Hide Extend for trial -->
+              <a *ngIf="!primaryUi?.isTrial"
+                 routerLink="/pricing"
+                 class="h-9 px-3 rounded text-xs sm:text-sm font-medium cursor-pointer flex items-center justify-center
+                        bg-[#1d2a32] hover:bg-[#24303c] text-white">
+                Extend
+              </a>
+            </div>
+          </ng-container>
+
+          <ng-template #noPrimary>
+            <div class="mt-4 rounded-lg border border-dashed border-[#1d2a32] p-4 text-center text-gray-300">
+              No active Premium Plan subscription.
+            </div>
+            <div class="mt-4">
+              <a routerLink="/pricing"
+                 class="h-9 px-3 rounded text-xs sm:text-sm font-medium cursor-pointer inline-flex items-center justify-center
+                        bg-green-600 hover:bg-green-700 text-white">
+                Start now
+              </a>
+            </div>
+          </ng-template>
+        </div>
+
+        <!-- Advanced Plan -->
+        <div class="relative rounded-xl bg-[#10181f] border border-[#1d2a32] shadow-md p-4 sm:p-5" [class.opacity-80]="!advancedUi">
+          <div class="flex items-start justify-between gap-3">
+            <div class="min-w-0">
+              <h3 class="text-sm sm:text-base font-semibold">Advanced Plan</h3>
+              <p *ngIf="advancedUi?.plan" class="mt-0.5 text-xs text-gray-400 truncate">Plan: {{ advancedUi?.plan }}</p>
+            </div>
+            <span *ngIf="advancedUi"
+                  class="text-xs sm:text-sm font-medium"
+                  [ngClass]="{
+                    'text-green-400': (advancedUi?.remainingDays ?? 0) > 14,
+                    'text-yellow-400': (advancedUi?.remainingDays ?? 0) <= 14 && (advancedUi?.remainingDays ?? 0) > 7,
+                    'text-red-400': (advancedUi?.remainingDays ?? 0) <= 7
+                  }">
+              ●
+              <ng-container *ngIf="advancedUi?.isTrial && advancedUi?.remainingSeconds !== null; else advancedDaysLeft">
+                {{ formatHms(advancedUi?.remainingSeconds || 0) }} left
+              </ng-container>
+              <ng-template #advancedDaysLeft>
+                {{ advancedUi?.remainingDays ?? '—' }} days left
+              </ng-template>
+            </span>
+          </div>
+
+          <ng-container *ngIf="advancedUi; else noAuto">
+            <div class="mt-4 space-y-2 text-xs sm:text-sm">
+              <div class="flex justify-between gap-3">
+                <span class="text-gray-300">Status</span>
+                <span [ngClass]="{ 'text-green-400': advancedUi?.active, 'text-red-500': !advancedUi?.active }">
+                  {{ advancedUi?.active ? 'Active' : 'Expired' }}
+                </span>
+              </div>
+              <div class="flex justify-between gap-3">
+                <span class="text-gray-300">Expires</span>
+                <span class="text-white">{{ advancedUi?.expiresAt ? (advancedUi?.expiresAt | date:'yyyy-MM-dd') : '—' }}</span>
+              </div>
+              <div class="flex justify-between gap-3">
+                <span class="text-gray-300">Purchased</span>
+                <span class="text-white">{{ advancedUi?.createdAt ? (advancedUi?.createdAt | date:'yyyy-MM-dd') : '—' }}</span>
+              </div>
+              <div *ngIf="isFuture(advancedUi?.startedAt)" class="text-yellow-400">
+                Starts on: {{ advancedUi?.startedAt | date:'yyyy-MM-dd' }}
+              </div>
+            </div>
+
+            <div class="mt-4 flex flex-wrap gap-2">
+              <a routerLink="/pricing"
+                 class="h-9 px-3 rounded text-xs sm:text-sm font-medium cursor-pointer flex items-center justify-center
+                        bg-[#1d2a32] hover:bg-[#24303c] text-white">
+                Extend
+              </a>
+            </div>
+          </ng-container>
+
+          <ng-template #noAuto>
+            <div class="mt-4 rounded-lg border border-dashed border-[#1d2a32] p-4 text-center text-gray-300">
+              No active Advanced Plan subscription.
+            </div>
+            <div class="mt-4">
+              <a routerLink="/pricing"
+                 class="h-9 px-3 rounded text-xs sm:text-sm font-medium cursor-pointer inline-flex items-center justify-center
+                        bg-green-600 hover:bg-green-700 text-white">
+                Add Advanced Plan
+              </a>
+            </div>
+          </ng-template>
+        </div>
+
+      </div>
+
+      <!-- History (no "Paid" section) -->
+      <div class="mt-6 bg-[#10181f] border border-[#1d2a32] rounded-xl p-4 sm:p-5">
+        <div class="flex items-center justify-between">
+          <h3 class="text-base sm:text-lg font-semibold">Purchase History</h3>
+          <button (click)="toggleHistory()" class="text-xs sm:text-sm text-green-400 hover:underline cursor-pointer">
+            {{ showHistory ? 'Hide' : 'Show' }}
+          </button>
+        </div>
+
+        <div *ngIf="history.length === 0" class="mt-4 text-sm text-gray-300">
+          No previous subscriptions found.
+        </div>
+
+        <div *ngIf="showHistory && history.length > 0" class="mt-4">
+          <ul class="space-y-3">
+            <li
+              *ngFor="let sub of sortedHistory"
+              class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 text-xs sm:text-sm
+                     text-[#c9d4df] bg-[#0f1720] border border-[#1d2a32] p-3 rounded-lg"
+            >
+              <span class="font-medium">{{ formatModel(sub.model) }}</span>
+              <span class="text-gray-400">{{ sub.createdAt | date:'yyyy-MM-dd' }}</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>

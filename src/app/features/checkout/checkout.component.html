@@ -1,0 +1,84 @@
+<div class="min-h-screen bg-[#141C22] text-white px-4 py-12" [attr.aria-busy]="!!loadingCurrency">
+  <div class="max-w-5xl mx-auto">
+    <h1 class="text-3xl font-bold mb-3 text-center">Checkout</h1>
+    <p class="text-[#B6C2CF] text-sm text-center mb-8">Review your selection and choose a payment method.</p>
+
+    <!-- Cart summary -->
+    <div class="bg-[#10181f] border border-[#1d2a32] rounded-xl p-5 mb-6 shadow">
+      <h2 class="text-lg font-semibold mb-3">Your Order</h2>
+      <div *ngIf="cart.length === 0" class="text-sm text-[#B6C2CF]">Your cart is empty.</div>
+
+      <div *ngFor="let i of cart" class="flex justify-between items-start bg-[#0f1720] border border-[#1d2a32] rounded p-3 mb-2">
+        <div class="min-w-0">
+          <div class="font-semibold">
+            {{ i.label }}
+            <span class="text-xs text-gray-400 ml-2">({{ i.feature }})</span>
+          </div>
+          <div class="text-xs text-[#B6C2CF]">{{ i.durationInDays }} days</div>
+          <div *ngIf="i.discountPercent" class="text-[11px] text-green-400 mt-1">
+            Save {{ i.discountPercent }}%
+          </div>
+        </div>
+
+        <!-- Price with discount -->
+        <div class="text-right">
+          <ng-container *ngIf="i.discountedCostInEuro !== undefined; else noDiscount">
+            <div class="text-[#FFD700] font-semibold">{{ i.discountedCostInEuro | number:'1.0-2' }} €</div>
+            <div class="line-through text-[#8aa0ad] text-xs">{{ i.costInEuro | number:'1.0-2' }} €</div>
+          </ng-container>
+          <ng-template #noDiscount>
+            <div class="text-[#FFD700] font-semibold">{{ i.costInEuro | number:'1.0-2' }} €</div>
+          </ng-template>
+        </div>
+      </div>
+
+      <div class="flex justify-between border-t border-[#1d2a32] pt-3 mt-3">
+        <span>Total</span>
+        <span class="text-[#FFD700] font-bold">{{ total | number:'1.0-2' }} €</span>
+      </div>
+    </div>
+
+    <!-- ToS -->
+    <label class="flex items-center gap-2 text-sm mb-6">
+      <input type="checkbox" [(ngModel)]="tosAccepted" class="h-4 w-4 rounded border-[#1d2a32] bg-[#0f1720] cursor-pointer" />
+      <span>I accept the <a class="text-[#3DB34A] hover:underline cursor-pointer" routerLink="/terms-of-service">Terms of Service</a>.</span>
+    </label>
+
+    <!-- Payment methods -->
+    <div class="bg-[#10181f] border border-[#1d2a32] rounded-xl p-5 shadow" aria-live="polite">
+      <h2 class="text-lg font-semibold mb-4">Choose a crypto method</h2>
+
+      <div class="grid grid-cols-2 md:grid-cols-3 gap-3">
+        <button
+          *ngFor="let c of currencies"
+          (click)="select(c.key)"
+          class="px-4 py-3 rounded-lg bg-[#0f1720] border border-[#1d2a32] hover:border-[#3DB34A] cursor-pointer flex items-center justify-center gap-2 disabled:opacity-60 disabled:cursor-not-allowed"
+          [disabled]="!!loadingCurrency || !tosAccepted || cart.length === 0"
+        >
+          <svg *ngIf="loadingCurrency === c.key" class="animate-spin h-4 w-4" viewBox="0 0 24 24" fill="none">
+            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="3"></circle>
+            <path class="opacity-75" fill="currentColor"
+              d="M4 12a8 8 0 018-8v3a5 5 0 00-5 5H4z"></path>
+          </svg>
+          <span>{{ c.label }}</span>
+        </button>
+      </div>
+
+      <div *ngIf="error" class="mt-4 p-3 rounded bg-[#2A1C1C] border border-red-500 text-red-300 text-sm">{{ error }}</div>
+
+      <!-- Small status line while creating order -->
+      <div *ngIf="phase === 'creating-order'" class="mt-4 text-sm text-[#B6C2CF]">Creating order…</div>
+    </div>
+  </div>
+
+  <!-- Fullscreen overlay while redirecting to pay page -->
+  <div *ngIf="phase === 'creating-payment'" class="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-50">
+    <div class="bg-[#0f1720] border border-[#1d2a32] rounded-xl p-6 flex items-center gap-3">
+      <svg class="animate-spin h-5 w-5" viewBox="0 0 24 24" fill="none">
+        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="white" stroke-width="3"></circle>
+        <path class="opacity-75" fill="white" d="M4 12a8 8 0 018-8v3a5 5 0 00-5 5H4z"></path>
+      </svg>
+      <div class="text-sm text-[#B6C2CF]">Preparing secure payment…</div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,45 @@
+/* Crossfade wrapper ONLY for the real plan list (avoid global fades) */
+.fade-wrap {
+  opacity: 0;
+  transform: translateY(4px);
+  transition: opacity 250ms ease, transform 250ms ease;
+}
+.fade-wrap.in {
+  opacity: 1;
+  transform: none;
+}
+
+/* Trial banner collapse (no jump) */
+.fade-collapse {
+  overflow: hidden;
+  transition: opacity 220ms ease, max-height 220ms ease, margin 220ms ease, padding 220ms ease;
+  max-height: 500px; /* enough for the banner */
+  opacity: 1;
+}
+.fade-collapse.hide {
+  opacity: 0;
+  max-height: 0;
+  margin-top: 0 !important;
+  margin-bottom: 0 !important;
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
+}
+
+/* Skeleton shimmer (cards + trial banner placeholders) */
+.skeleton {
+  position: relative;
+  overflow: hidden;
+  border-radius: 0.5rem;
+  background: #142029;
+}
+.skeleton::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  transform: translateX(-100%);
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.06), transparent);
+  animation: shimmer 1.25s infinite;
+}
+@keyframes shimmer {
+  100% { transform: translateX(100%); }
+}

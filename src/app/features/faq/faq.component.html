@@ -1,0 +1,349 @@
+<!-- Page wrapper -->
+<div class="min-h-screen bg-[#141C22] text-white px-4 py-12">
+  <!-- Header / Hero -->
+  <div class="max-w-4xl mx-auto text-center mb-10">
+    <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#10181f] border border-[#1d2a32] text-xs text-[#B6C2CF]">
+      <span class="w-2 h-2 rounded-full bg-[#3DB34A]"></span>
+      Updated regularly
+    </div>
+    <h1 class="mt-3 text-3xl sm:text-4xl font-extrabold tracking-tight">
+      Frequently Asked <span class="text-transparent bg-clip-text bg-gradient-to-r from-[#3DB34A] to-[#7BE27E]">Questions</span>
+    </h1>
+    <p class="text-[#B6C2CF] max-w-2xl mx-auto text-sm mt-3">
+      Quick answers about TaskFlow, features, security, payments, and support.
+    </p>
+
+    <!-- Quick links -->
+    <div class="mt-6 flex flex-wrap justify-center gap-2">
+      <a routerLink="/pricing" class="h-9 px-4 rounded-lg text-xs sm:text-sm font-medium inline-flex items-center justify-center bg-[#1d2a32] hover:bg-[#24303c]">
+        View Pricing
+      </a>
+      <a routerLink="/subscription" class="h-9 px-4 rounded-lg text-xs sm:text-sm font-medium inline-flex items-center justify-center bg-[#1d2a32] hover:bg-[#24303c]">
+        Manage Subscription
+      </a>
+       <a href="https://discord.gg/taskflow" target="_blank"
+        class="h-9 px-4 rounded-lg text-xs sm:text-sm font-medium inline-flex items-center justify-center bg-[#1d2a32] hover:bg-[#24303c] gap-2">
+        <img src="assets/icons/discord.svg" alt="Discord" class="h-6 w-6" />
+        <span>Join Community</span>
+      </a>
+    </div>
+  </div>
+
+  <!-- Highlights row -->
+  <div class="max-w-4xl mx-auto grid grid-cols-1 sm:grid-cols-3 gap-3 mb-8">
+    <div class="rounded-xl bg-[#10181f] border border-[#1d2a32] p-4">
+      <p class="text-sm text-[#B6C2CF]">Performance</p>
+      <p class="text-lg font-semibold mt-1">Real-time execution</p>
+      <p class="text-xs text-[#8FA2B2] mt-2">Optimized for low-latency task processing.</p>
+    </div>
+    <div class="rounded-xl bg-[#10181f] border border-[#1d2a32] p-4">
+      <p class="text-sm text-[#B6C2CF]">Security</p>
+      <p class="text-lg font-semibold mt-1">Enterprise-grade</p>
+      <p class="text-xs text-[#8FA2B2] mt-2">JWT-based authentication with encrypted transport.</p>
+    </div>
+    <div class="rounded-xl bg-[#10181f] border border-[#1d2a32] p-4">
+      <p class="text-sm text-[#B6C2CF]">Control</p>
+      <p class="text-lg font-semibold mt-1">Flexible workflows</p>
+      <p class="text-xs text-[#8FA2B2] mt-2">Configure rules, thresholds, and execution policies.</p>
+    </div>
+  </div>
+
+  <!-- FAQ List -->
+  <div class="max-w-3xl mx-auto bg-[#10181f] border border-[#1d2a32] rounded-xl p-4 sm:p-6">
+    <div class="space-y-3">
+
+      <!-- Security -->
+      <details class="group rounded-lg border border-[#1d2a32] bg-[#0f1720] p-4">
+        <summary class="cursor-pointer text-base sm:text-lg font-semibold flex justify-between items-center list-none">
+          <span>Is my data secure?</span>
+          <span class="ml-4 text-[#3DB34A] transition-transform group-open:rotate-180">▼</span>
+        </summary>
+        <div class="text-[#B6C2CF] mt-3 text-sm leading-relaxed space-y-2">
+          <p>
+            Yes. TaskFlow uses <strong>industry-standard security practices</strong> including JWT authentication,
+            encrypted transport (TLS), and role-based access control.
+          </p>
+          <ul class="list-disc pl-5 space-y-1">
+            <li>All data encrypted in transit and at rest</li>
+            <li>Secure authentication with token-based sessions</li>
+            <li>Regular security audits and updates</li>
+          </ul>
+        </div>
+      </details>
+
+      <!-- Payment / Cancellation -->
+      <details class="group rounded-lg border border-[#1d2a32] bg-[#0f1720] p-4">
+        <summary class="cursor-pointer text-base sm:text-lg font-semibold flex justify-between items-center list-none">
+          <span>Can I cancel anytime?</span>
+          <span class="ml-4 text-[#3DB34A] transition-transform group-open:rotate-180">▼</span>
+        </summary>
+        <div class="text-[#B6C2CF] mt-3 text-sm leading-relaxed space-y-2">
+          <p>
+            There's <strong>no auto-renewal</strong>. Subscriptions are month-to-month. If you don't renew,
+            access will lapse automatically without charges.
+          </p>
+          <ul class="list-disc pl-5 space-y-1">
+            <li>No long-term contracts</li>
+            <li>Cancel or pause anytime</li>
+            <li>Manage everything from your dashboard</li>
+          </ul>
+        </div>
+      </details>
+
+      <!-- Activation -->
+      <details class="group rounded-lg border border-[#1d2a32] bg-[#0f1720] p-4">
+        <summary class="cursor-pointer text-base sm:text-lg font-semibold flex justify-between items-center list-none">
+          <span>How long after payment until activation?</span>
+          <span class="ml-4 text-[#3DB34A] transition-transform group-open:rotate-180">▼</span>
+        </summary>
+        <div class="text-[#B6C2CF] mt-3 text-sm leading-relaxed space-y-2">
+          <p>
+            <strong>Immediately</strong> after payment confirmation. You'll be redirected to the dashboard
+            and can start configuring your workflows right away.
+          </p>
+          <ul class="list-disc pl-5 space-y-1">
+            <li>Instant account activation</li>
+            <li>Settings preserved from trial period</li>
+            <li>Support available if any issues occur</li>
+          </ul>
+        </div>
+      </details>
+
+      <!-- Trial -->
+      <details class="group rounded-lg border border-[#1d2a32] bg-[#0f1720] p-4">
+        <summary class="cursor-pointer text-base sm:text-lg font-semibold flex justify-between items-center list-none">
+          <span>Is there a trial available?</span>
+          <span class="ml-4 text-[#3DB34A] transition-transform group-open:rotate-180">▼</span>
+        </summary>
+        <div class="text-[#B6C2CF] mt-3 text-sm leading-relaxed space-y-2">
+          <p>
+            Yes, we offer a 24-hour free trial for new users. Trial access includes core features
+            with a <strong>countdown timer</strong> and option to upgrade anytime.
+          </p>
+          <p>When the trial ends, access stops unless you purchase a plan.</p>
+        </div>
+      </details>
+
+      <!-- Getting Started -->
+      <details class="group rounded-lg border border-[#1d2a32] bg-[#0f1720] p-4">
+        <summary class="cursor-pointer text-base sm:text-lg font-semibold flex justify-between items-center list-none">
+          <span>How do I get started?</span>
+          <span class="ml-4 text-[#3DB34A] transition-transform group-open:rotate-180">▼</span>
+        </summary>
+        <div class="text-[#B6C2CF] mt-3 text-sm leading-relaxed space-y-2">
+          <ol class="list-decimal pl-5 space-y-1">
+            <li>Create an account and select a plan</li>
+            <li>Configure your workflow rules and thresholds</li>
+            <li>Set execution policies and filters</li>
+            <li>Activate automation from the dashboard</li>
+          </ol>
+          <p>No technical background required — intuitive interface with guided setup.</p>
+        </div>
+      </details>
+
+      <!-- Configuration -->
+      <details class="group rounded-lg border border-[#1d2a32] bg-[#0f1720] p-4">
+        <summary class="cursor-pointer text-base sm:text-lg font-semibold flex justify-between items-center list-none">
+          <span>What can I configure?</span>
+          <span class="ml-4 text-[#3DB34A] transition-transform group-open:rotate-180">▼</span>
+        </summary>
+        <div class="text-[#B6C2CF] mt-3 text-sm leading-relaxed space-y-2">
+          <p>TaskFlow provides comprehensive configuration options for your workflows.</p>
+          <p class="text-xs text-[#8FA2B2]">All settings are accessible via the dashboard with contextual help.</p>
+        </div>
+      </details>
+
+      <!-- Performance -->
+      <details class="group rounded-lg border border-[#1d2a32] bg-[#0f1720] p-4">
+        <summary class="cursor-pointer text-base sm:text-lg font-semibold flex justify-between items-center list-none">
+          <span>What is the system performance?</span>
+          <span class="ml-4 text-[#3DB34A] transition-transform group-open:rotate-180">▼</span>
+        </summary>
+        <div class="text-[#B6C2CF] mt-3 text-sm leading-relaxed space-y-2">
+          <p>
+            The platform is optimized for <strong>low-latency execution</strong>. Tasks are processed
+            within milliseconds under typical load conditions.
+          </p>
+        </div>
+      </details>
+
+      <!-- Rules & Policies -->
+      <details class="group rounded-lg border border-[#1d2a32] bg-[#0f1720] p-4">
+        <summary class="cursor-pointer text-base sm:text-lg font-semibold flex justify-between items-center list-none">
+          <span>What execution rules can I set?</span>
+          <span class="ml-4 text-[#3DB34A] transition-transform group-open:rotate-180">▼</span>
+        </summary>
+        <div class="text-[#B6C2CF] mt-3 text-sm leading-relaxed space-y-2">
+          <ul class="list-disc pl-5 space-y-1">
+            <li><strong>Thresholds</strong> — set minimum and maximum values</li>
+            <li><strong>Filters</strong> — include or exclude based on criteria</li>
+            <li><strong>Scheduling</strong> — configure timing and frequency</li>
+            <li><strong>Limits</strong> — prevent resource overuse</li>
+          </ul>
+        </div>
+      </details>
+
+      <!-- Payments -->
+      <details class="group rounded-lg border border-[#1d2a32] bg-[#0f1720] p-4">
+        <summary class="cursor-pointer text-base sm:text-lg font-semibold flex justify-between items-center list-none">
+          <span>What payment methods are supported?</span>
+          <span class="ml-4 text-[#3DB34A] transition-transform group-open:rotate-180">▼</span>
+        </summary>
+        <div class="text-[#B6C2CF] mt-3 text-sm leading-relaxed space-y-2">
+          <p>We support multiple payment methods including cryptocurrency. Additional payment providers may be added. See <a routerLink="/pricing" class="text-[#7BE27E] underline">Pricing</a> for current options.</p>
+          <p>All payments are processed by secure third-party gateways.</p>
+        </div>
+      </details>
+
+      <!-- Refunds -->
+      <details class="group rounded-lg border border-[#1d2a32] bg-[#0f1720] p-4">
+        <summary class="cursor-pointer text-base sm:text-lg font-semibold flex justify-between items-center list-none">
+          <span>What is the refund policy?</span>
+          <span class="ml-4 text-[#3DB34A] transition-transform group-open:rotate-180">▼</span>
+        </summary>
+        <div class="text-[#B6C2CF] mt-3 text-sm leading-relaxed space-y-2">
+          <p>Refunds are evaluated on a case-by-case basis per our Terms of Service. Contact support for assistance.</p>
+        </div>
+      </details>
+
+      <!-- Access Management -->
+      <details class="group rounded-lg border border-[#1d2a32] bg-[#0f1720] p-4">
+        <summary class="cursor-pointer text-base sm:text-lg font-semibold flex justify-between items-center list-none">
+          <span>How do I manage my access?</span>
+          <span class="ml-4 text-[#3DB34A] transition-transform group-open:rotate-180">▼</span>
+        </summary>
+        <div class="text-[#B6C2CF] mt-3 text-sm leading-relaxed space-y-2">
+          <p>
+            Authentication is managed through secure JWT tokens. Access can be revoked anytime from your profile settings.
+          </p>
+          <p class="text-xs text-[#8FA2B2]">
+            Best practice: Rotate your credentials regularly and enable two-factor authentication when available.
+          </p>
+        </div>
+      </details>
+
+      <!-- Multi-device -->
+      <details class="group rounded-lg border border-[#1d2a32] bg-[#0f1720] p-4">
+        <summary class="cursor-pointer text-base sm:text-lg font-semibold flex justify-between items-center list-none">
+          <span>Can I access from multiple devices?</span>
+          <span class="ml-4 text-[#3DB34A] transition-transform group-open:rotate-180">▼</span>
+        </summary>
+        <div class="text-[#B6C2CF] mt-3 text-sm leading-relaxed space-y-2">
+          <p>Yes, you can log in from multiple devices to monitor and manage your workflows.</p>
+        </div>
+      </details>
+
+      <!-- Maintenance -->
+      <details class="group rounded-lg border border-[#1d2a32] bg-[#0f1720] p-4">
+        <summary class="cursor-pointer text-base sm:text-lg font-semibold flex justify-between items-center list-none">
+          <span>What happens during maintenance?</span>
+          <span class="ml-4 text-[#3DB34A] transition-transform group-open:rotate-180">▼</span>
+        </summary>
+        <div class="text-[#B6C2CF] mt-3 text-sm leading-relaxed space-y-2">
+          <p>Scheduled maintenance is announced in advance. The system pauses tasks safely and resumes automatically when online.</p>
+        </div>
+      </details>
+
+      <!-- Compatibility -->
+      <details class="group rounded-lg border border-[#1d2a32] bg-[#0f1720] p-4">
+        <summary class="cursor-pointer text-base sm:text-lg font-semibold flex justify-between items-center list-none">
+          <span>Which platforms are supported?</span>
+          <span class="ml-4 text-[#3DB34A] transition-transform group-open:rotate-180">▼</span>
+        </summary>
+        <div class="text-[#B6C2CF] mt-3 text-sm leading-relaxed space-y-2">
+          <p>TaskFlow runs in modern web browsers on desktop and mobile. Desktop is recommended for configuration.</p>
+        </div>
+      </details>
+
+      <!-- Data & Privacy -->
+      <details class="group rounded-lg border border-[#1d2a32] bg-[#0f1720] p-4">
+        <summary class="cursor-pointer text-base sm:text-lg font-semibold flex justify-between items-center list-none">
+          <span>What data is collected?</span>
+          <span class="ml-4 text-[#3DB34A] transition-transform group-open:rotate-180">▼</span>
+        </summary>
+        <div class="text-[#B6C2CF] mt-3 text-sm leading-relaxed space-y-2">
+          <ul class="list-disc pl-5 space-y-1">
+            <li>Account credentials and profile information</li>
+            <li>Workflow configuration and execution history</li>
+            <li>Performance metrics and system logs</li>
+          </ul>
+          <p class="text-xs text-[#8FA2B2]">See our Privacy Policy for full details.</p>
+        </div>
+      </details>
+
+      <!-- Uptime & Support -->
+      <details class="group rounded-lg border border-[#1d2a32] bg-[#0f1720] p-4">
+        <summary class="cursor-pointer text-base sm:text-lg font-semibold flex justify-between items-center list-none">
+          <span>What is the uptime and support availability?</span>
+          <span class="ml-4 text-[#3DB34A] transition-transform group-open:rotate-180">▼</span>
+        </summary>
+        <div class="text-[#B6C2CF] mt-3 text-sm leading-relaxed space-y-2">
+          <p>The platform is designed for high availability with monitoring and automated alerts.</p>
+          <p>
+            Support is available via
+            <a href="https://discord.gg/taskflow" target="_blank" class="text-[#5865F2] hover:underline">
+              Discord
+            </a>
+            and support channels. Response times vary by plan and issue severity.
+          </p>
+        </div>
+      </details>
+
+      <!-- Limits -->
+      <details class="group rounded-lg border border-[#1d2a32] bg-[#0f1720] p-4">
+        <summary class="cursor-pointer text-base sm:text-lg font-semibold flex justify-between items-center list-none">
+          <span>Are there usage limits?</span>
+          <span class="ml-4 text-[#3DB34A] transition-transform group-open:rotate-180">▼</span>
+        </summary>
+        <div class="text-[#B6C2CF] mt-3 text-sm leading-relaxed space-y-2">
+          <p>Fair-use policies ensure system stability. Plan-specific limits are listed on the Pricing page.</p>
+        </div>
+      </details>
+
+      <!-- Updates -->
+      <details class="group rounded-lg border border-[#1d2a32] bg-[#0f1720] p-4">
+        <summary class="cursor-pointer text-base sm:text-lg font-semibold flex justify-between items-center list-none">
+          <span>How often are updates released?</span>
+          <span class="ml-4 text-[#3DB34A] transition-transform group-open:rotate-180">▼</span>
+        </summary>
+        <div class="text-[#B6C2CF] mt-3 text-sm leading-relaxed space-y-2">
+          <p>Continuous deployment includes performance improvements, new features, and security patches. Major updates are announced in the dashboard.</p>
+        </div>
+      </details>
+
+      <!-- Disclaimer -->
+      <details class="group rounded-lg border border-[#1d2a32] bg-[#0f1720] p-4">
+        <summary class="cursor-pointer text-base sm:text-lg font-semibold flex justify-between items-center list-none">
+          <span>Is TaskFlow a production service?</span>
+          <span class="ml-4 text-[#3DB34A] transition-transform group-open:rotate-180">▼</span>
+        </summary>
+        <div class="text-[#B6C2CF] mt-3 text-sm leading-relaxed">
+          This is a portfolio demonstration project. It does not connect to or interact with any third-party services.
+        </div>
+      </details>
+
+      <!-- CTA row -->
+      <div class="pt-2 flex flex-wrap gap-2">
+        <a routerLink="/pricing" class="h-9 px-3 rounded text-xs sm:text-sm font-medium inline-flex items-center justify-center bg-[#1d2a32] hover:bg-[#24303c]">
+          View Pricing
+        </a>
+        <a routerLink="/subscription" class="h-9 px-3 rounded text-xs sm:text-sm font-medium inline-flex items-center justify-center bg-[#1d2a32] hover:bg-[#24303c]">
+          Manage Subscription
+        </a>
+        <a href="https://discord.gg/taskflow" target="_blank"
+          class="h-9 px-3 rounded text-xs sm:text-sm font-medium inline-flex items-center justify-center border border-[#2a3946] hover:bg-[#0f1720]">
+          Need help?
+        </a>
+      </div>
+    </div>
+
+    <!-- Footer meta -->
+    <div class="mt-6 text-[11px] text-[#8FA2B2] flex flex-wrap items-center justify-between gap-3">
+      <span>Last updated: <span class="text-white">Jan 2026</span></span>
+      <div class="flex items-center gap-2">
+        <span class="w-2 h-2 rounded-full bg-[#3DB34A]"></span>
+        System status: Operational
+      </div>
+    </div>
+  </div>
+</div>

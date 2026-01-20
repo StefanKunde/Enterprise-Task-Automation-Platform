@@ -1,0 +1,56 @@
+<svg width="200" height="200" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background circle with gradient -->
+  <defs>
+    <linearGradient id="logoGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#3DB34A;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#2DA436;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="accentGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#7BE27E;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#3DB34A;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+
+  <!-- Main circular background -->
+  <circle cx="100" cy="100" r="90" fill="url(#logoGradient)" opacity="0.15"/>
+  <circle cx="100" cy="100" r="85" fill="none" stroke="url(#logoGradient)" stroke-width="3"/>
+
+  <!-- Abstract task flow representation - interconnected nodes -->
+  <!-- Node 1 (top) -->
+  <circle cx="100" cy="45" r="12" fill="url(#accentGradient)"/>
+
+  <!-- Node 2 (left) -->
+  <circle cx="60" cy="100" r="12" fill="url(#logoGradient)"/>
+
+  <!-- Node 3 (right) -->
+  <circle cx="140" cy="100" r="12" fill="url(#logoGradient)"/>
+
+  <!-- Node 4 (bottom left) -->
+  <circle cx="75" cy="145" r="12" fill="url(#accentGradient)"/>
+
+  <!-- Node 5 (bottom right) -->
+  <circle cx="125" cy="145" r="12" fill="url(#accentGradient)"/>
+
+  <!-- Connection lines representing flow -->
+  <path d="M100 57 L100 88" stroke="url(#logoGradient)" stroke-width="3" stroke-linecap="round"/>
+  <path d="M92 92 L68 100" stroke="url(#logoGradient)" stroke-width="3" stroke-linecap="round"/>
+  <path d="M108 92 L132 100" stroke="url(#logoGradient)" stroke-width="3" stroke-linecap="round"/>
+  <path d="M66 110 L78 135" stroke="url(#logoGradient)" stroke-width="3" stroke-linecap="round"/>
+  <path d="M134 110 L122 135" stroke="url(#logoGradient)" stroke-width="3" stroke-linecap="round"/>
+
+  <!-- Central hub -->
+  <circle cx="100" cy="100" r="18" fill="#141C22"/>
+  <circle cx="100" cy="100" r="18" fill="url(#logoGradient)" opacity="0.3"/>
+  <circle cx="100" cy="100" r="14" fill="none" stroke="url(#accentGradient)" stroke-width="2"/>
+
+  <!-- Arrow symbol in center representing automation -->
+  <path d="M100 90 L100 110 M95 105 L100 110 L105 105" stroke="#3DB34A" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+
+  <!-- Subtle gear teeth around outer circle for automation theme -->
+  <g opacity="0.4">
+    <rect x="98" y="8" width="4" height="8" fill="#3DB34A" rx="1"/>
+    <rect x="98" y="184" width="4" height="8" fill="#3DB34A" rx="1"/>
+    <rect x="8" y="98" width="8" height="4" fill="#3DB34A" rx="1"/>
+    <rect x="184" y="98" width="8" height="4" fill="#3DB34A" rx="1"/>
+  </g>
+</svg>
