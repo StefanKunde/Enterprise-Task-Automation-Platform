@@ -1,0 +1,1 @@
+var t={production:!0,apiBaseUrl:"/api",dataApiBaseUrl:"/data",wsBaseUrl:"/",jwtSecret:"REPLACE_WITH_ENV_VARIABLE",oauthLoginUrl:"/api/auth/oauth",notificationSystemName:"TaskSystemNotify"};export{t as a};
